@@ -9,6 +9,7 @@ import django_otp
 import qrcode
 import qrcode.image.svg
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -179,6 +180,13 @@ class LoginView(SuccessURLAllowedHostsMixin, IdempotentSessionWizardView):
                                     httponly=getattr(settings, 'TWO_FACTOR_REMEMBER_COOKIE_HTTPONLY', True),
                                     samesite=getattr(settings, 'TWO_FACTOR_REMEMBER_COOKIE_SAMESITE', 'Lax'),
                                     )
+            
+            elif getattr(settings, 'ENFORCE_TWO_FACTOR', False):
+                messages.warning(self.request, 'Two Factor Authentication Enable required')
+                return redirect('two_factor:setup')
+            
+            else:
+                messages.warning(self.request, 'Two Factor Authentication Enable required')
 
         return response
 
