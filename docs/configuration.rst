@@ -11,6 +11,9 @@ General Settings
      The admin currently does not enforce one-time passwords being set for
      admin users.
 
+``ENFORCE_TWO_FACTOR`` (default: ``False``)
+  Whether to enforce users to enable the two factor authentication feature or not.
+
 ``TWO_FACTOR_CALL_GATEWAY`` (default: ``None``)
   Which gateway to use for making phone calls. Should be set to a module or
   object providing a ``make_call`` method. Currently two gateways are bundled:
